@@ -1,13 +1,11 @@
 var React = require('react');
 var cx = require('classnames');
 
-var ActionSheetContent = React.createClass({
-  displayName: 'ActionSheetContent',
+class ActionSheetContent extends React.Component {
+  static displayName = 'ActionSheetContent';
+  static defaultProps = { position: 'bottom' };
 
-  getDefaultProps: function () {
-    return { position: 'bottom' };
-  },
-  render: function () {
+  render() {
     var classes = {
       'action-sheet': true,
       'is-active': this.props.active
@@ -18,6 +16,6 @@ var ActionSheetContent = React.createClass({
       this.props.children
     );
   }
-});
+}
 
 module.exports = ActionSheetContent;

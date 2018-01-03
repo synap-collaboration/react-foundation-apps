@@ -3,20 +3,19 @@ var ReactDOM = require('react-dom');
 var foundationApi = require('../utils/foundation-api');
 var PopupToggle = require('../popup/toggle');
 
-var Trigger = React.createClass({
-  displayName: 'Trigger',
+class Trigger extends React.Component {
+  static displayName = 'Trigger';
 
-  getDefaultProps: function () {
-    return {
-      open: null,
-      close: null,
-      toggle: null,
-      hardToggle: null,
-      popupToggle: null,
-      notify: null
-    };
-  },
-  getCloseId: function () {
+  static defaultProps = {
+    open: null,
+    close: null,
+    toggle: null,
+    hardToggle: null,
+    popupToggle: null,
+    notify: null
+  };
+
+  getCloseId = () => {
     if (this.props.close) {
       return this.props.close;
     } else {
@@ -34,8 +33,9 @@ var Trigger = React.createClass({
       }
       return parentElement.getAttribute('id');
     }
-  },
-  clickHandler: function (e) {
+  };
+
+  clickHandler = (e) => {
     e.preventDefault();
     if (this.props.open) {
       foundationApi.publish(this.props.open, 'open');
@@ -55,8 +55,9 @@ var Trigger = React.createClass({
         image: this.props.image
       });
     }
-  },
-  render: function () {
+  };
+
+  render() {
     if (this.props.popupToggle) {
       return React.createElement(PopupToggle, this.props);
     } else {
@@ -66,6 +67,6 @@ var Trigger = React.createClass({
       });
     }
   }
-});
+}
 
 module.exports = Trigger;

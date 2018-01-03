@@ -5,13 +5,11 @@ var foundationApi = require('../utils/foundation-api');
 var Animation = require('../utils/animation');
 var Notification = require('./notification');
 
-var NotificationStatic = React.createClass({
-  displayName: 'NotificationStatic',
+class NotificationStatic extends React.Component {
+  static displayName = 'NotificationStatic';
+  state = { open: false };
 
-  getInitialState: function () {
-    return { open: false };
-  },
-  componentDidMount: function () {
+  componentDidMount() {
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({ open: true });
@@ -19,16 +17,19 @@ var NotificationStatic = React.createClass({
         this.setState({ open: false });
       }
     }.bind(this));
-  },
-  componentWillUnmount: function () {
+  }
+
+  componentWillUnmount() {
     foundationApi.unsubscribe(this.props.id);
-  },
-  closeHandler: function (e) {
+  }
+
+  closeHandler = (e) => {
     this.setState({ open: false });
     e.preventDefault();
     e.stopPropagation();
-  },
-  render: function () {
+  };
+
+  render() {
     return React.createElement(
       Animation,
       { active: this.state.open, animationIn: 'fadeIn', animationOut: 'fadeOut' },
@@ -39,6 +40,6 @@ var NotificationStatic = React.createClass({
       )
     );
   }
-});
+}
 
 module.exports = NotificationStatic;

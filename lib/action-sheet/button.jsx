@@ -1,13 +1,14 @@
 var React = require('react');
 var cx = require('classnames');
 
-var ActionSheetButton = React.createClass({
-  displayName: 'ActionSheetButton',
+class ActionSheetButton extends React.Component {
+  static displayName = 'ActionSheetButton';
 
-  toggle: function () {
+  toggle = () => {
     this.props.setActiveState(!this.props.active);
-  },
-  render: function () {
+  };
+
+  render() {
     var Title = null;
     var classes = {
       'is-active': this.props.active
@@ -30,6 +31,6 @@ var ActionSheetButton = React.createClass({
       )
     );
   }
-});
+}
 
 module.exports = ActionSheetButton;

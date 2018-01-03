@@ -3,19 +3,17 @@ var cx = require('classnames');
 // var LayerMixin = require('react-layer-mixin');
 var foundationApi = require('../utils/foundation-api');
 
-var Offcanvas = React.createClass({
-  displayName: 'Offcanvas',
+class Offcanvas extends React.Component {
+  static displayName = 'Offcanvas';
+
+  static defaultProps = {
+    position: 'left'
+  };
 
   // mixins: [LayerMixin],
-  getInitialState: function () {
-    return { open: false };
-  },
-  getDefaultProps: function () {
-    return {
-      position: 'left'
-    };
-  },
-  componentDidMount: function () {
+  state = { open: false };
+
+  componentDidMount() {
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({ open: true });
@@ -25,11 +23,13 @@ var Offcanvas = React.createClass({
         this.setState({ open: !this.state.open });
       }
     }.bind(this));
-  },
-  componentWillUnmount: function () {
+  }
+
+  componentWillUnmount() {
     foundationApi.unsubscribe(this.props.id);
-  },
-  render: function () {
+  }
+
+  render() {
     var classes = {
       'off-canvas': true,
       'is-active': this.state.open
@@ -44,6 +44,6 @@ var Offcanvas = React.createClass({
       this.props.children
     );
   }
-});
+}
 
 module.exports = Offcanvas;
