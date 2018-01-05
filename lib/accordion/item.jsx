@@ -1,10 +1,10 @@
 var React = require('react');
 var cx = require('classnames');
 
-var AccordionItem = React.createClass({
-  displayName: 'AccordionItem',
+class AccordionItem extends React.Component {
+  static displayName = 'AccordionItem';
 
-  render: function () {
+  render() {
     var itemClasses = {
       'accordion-item': true,
       'is-active': this.props.active
@@ -24,6 +24,6 @@ var AccordionItem = React.createClass({
       )
     );
   }
-});
+}
 
 module.exports = AccordionItem;

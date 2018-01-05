@@ -17,7 +17,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react']},
+      {test: /\.jsx$/, loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react&plugins[]=transform-class-properties']},
       {
         test: /\.scss$/,
         loader: "style!css!postcss!sass?outputStyle=expanded&includePaths[]=" + 

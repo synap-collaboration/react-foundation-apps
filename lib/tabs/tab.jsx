@@ -1,22 +1,24 @@
 var React = require('react');
 var cx = require('classnames');
 
-var Tab = React.createClass({
-  displayName: 'Tab',
+class Tab extends React.Component {
+  static displayName = 'Tab';
 
-  componentDidMount: function () {
+  componentDidMount() {
     if (this.props.active) {
       this.select();
     }
-  },
-  select: function () {
+  }
+
+  select = () => {
     var options = {
       selectedTab: this.props.index,
       content: this.props.children
     };
     this.props.selectTab(options);
-  },
-  render: function () {
+  };
+
+  render() {
     var classes = {
       'tab-item': true,
       'is-active': this.props.active
@@ -27,6 +29,6 @@ var Tab = React.createClass({
       this.props.title
     );
   }
-});
+}
 
 module.exports = Tab;

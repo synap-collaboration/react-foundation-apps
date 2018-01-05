@@ -1,18 +1,17 @@
 var React = require('react');
 
-var Notification = React.createClass({
-  displayName: 'Notification',
+class Notification extends React.Component {
+  static displayName = 'Notification';
 
-  getDefaultProps: function () {
-    return {
-      position: 'top-right',
-      color: 'success',
-      title: null,
-      image: null,
-      content: null
-    };
-  },
-  render: function () {
+  static defaultProps = {
+    position: 'top-right',
+    color: 'success',
+    title: null,
+    image: null,
+    content: null
+  };
+
+  render() {
     var classes = 'notification ' + this.props.position + ' ' + this.props.color;
     classes += ' ' + (this.props.className || '');
     var imageNode = null;
@@ -48,6 +47,6 @@ var Notification = React.createClass({
       )
     );
   }
-});
+}
 
 module.exports = Notification;
