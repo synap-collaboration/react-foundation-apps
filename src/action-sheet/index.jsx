@@ -1,17 +1,18 @@
 var React = require('react');
 var foundationApi = require('../utils/foundation-api');
 
-var ActionSheet = React.createClass({
-  getInitialState: function () {
-    return {active: false};
-  },
-  setActiveState: function (active) {
+class ActionSheet extends React.Component {
+  state = {active: false};
+
+  setActiveState = (active) => {
     this.setState({active: active});
-  },
-  onBodyClick: function (e) {
+  };
+
+  onBodyClick = (e) => {
     if (e.target.dataset && !e.target.dataset['keepActionSheetActive']) this.setActiveState(false);
-  },
-  componentDidMount: function () {
+  };
+
+  componentDidMount() {
     if(this.props.id) {
       foundationApi.subscribe(this.props.id, function (name, msg) {
         if (msg === 'open') {
@@ -24,12 +25,14 @@ var ActionSheet = React.createClass({
       }.bind(this));
     }
     document.body.addEventListener('click', this.onBodyClick);
-  },
-  componentWillUnmount: function () {
+  }
+
+  componentWillUnmount() {
     if(this.props.id) foundationApi.unsubscribe(this.props.id);
     document.body.removeEventListener('click', this.onBodyClick);
-  },
-  render: function () {
+  }
+
+  render() {
     var children = React.Children.map(this.props.children, function (child, index) {
       var extraProps = {active: this.props.forceActive ? true : this.state.active};
       if (child.type.displayName === 'ActionSheetButton') {
@@ -43,7 +46,7 @@ var ActionSheet = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = ActionSheet;
 ActionSheet.Button = require('./button');

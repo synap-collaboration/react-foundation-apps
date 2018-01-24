@@ -5,28 +5,27 @@ var ExecutionEnvironment = require('exenv');
 var foundationApi = require('../utils/foundation-api');
 var Tether = ExecutionEnvironment.canUseDOM && require('tether/tether');
 
-var Popup = React.createClass({
-  getInitialState: function () {
-    return {
-      active: false,
-      tetherInit: false
-    };
-  },
-  getDefaultProps: function () {
-    return {
-      pinTo: 'top center',
-      pinAt:''
-    };
-  },
-  componentDidMount: function () {
+class Popup extends React.Component {
+  static defaultProps = {
+    pinTo: 'top center',
+    pinAt:''
+  };
+
+  state = {
+    active: false,
+    tetherInit: false
+  };
+
+  componentDidMount() {
     this.tether = {};
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg[0] === 'toggle') {
         this.toggle(msg[1]);
       }
     }.bind(this));
-  },
-  toggle: function (target) {
+  }
+
+  toggle = (target) => {
     var active = !this.state.active;
     this.setState({active: active}, function () {
       if (active) {
@@ -35,8 +34,9 @@ var Popup = React.createClass({
         this.tether.destroy();
       }
     }.bind(this));
-  },
-  tetherElement: function(target) {
+  };
+
+  tetherElement = (target) => {
     var targetElement = document.getElementById(target);
     var attachment = 'top center';
     this.tether = new Tether({
@@ -44,8 +44,9 @@ var Popup = React.createClass({
       target: targetElement,
       attachment: attachment,
     });
-  },
-  render: function () {
+  };
+
+  render() {
     var classes = {
       popup: true,
       'is-active': this.state.active
@@ -55,7 +56,7 @@ var Popup = React.createClass({
         {this.props.children}
       </div>
     );
-  },
-});
+  }
+}
 
 module.exports = Popup;
