@@ -1,7 +1,6 @@
 // some parts of code from react/lib/ReactCSSTransitionGroupChild.js
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactTransitionEvents = require('react/lib/ReactTransitionEvents');
 var CSSCore = require('fbjs/lib/CSSCore');
 var TICK = 17;
 
@@ -35,7 +34,6 @@ class Animation extends React.Component {
     this.reset(node);
     CSSCore.removeClass(node, this.props.active ? '' : 'is-active');
     this.reflow(node);
-    ReactTransitionEvents.removeEndEventListener(node, this.finishAnimation);
   };
 
   animate = (animationClass, animationType) => {
@@ -55,7 +53,6 @@ class Animation extends React.Component {
     node.style.transitionDuration = '';
     CSSCore.addClass(node, activeClass);
 
-    ReactTransitionEvents.addEndEventListener(node, this.finishAnimation);
     this.finishAnimation();
   };
 
