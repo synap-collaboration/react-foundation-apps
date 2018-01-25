@@ -3,20 +3,23 @@ var ReactDOM = require('react-dom');
 var ExecutionEnvironment = require('exenv');
 var IconicJs = ExecutionEnvironment.canUseDOM && require('../../vendor/iconic.min');
 
-var Iconic = React.createClass({
-  inject: function () {
+class Iconic extends React.Component {
+  inject = () => {
     var ico = IconicJs();
     ico.inject(ReactDOM.findDOMNode(this));
-  },
-  componentDidMount: function () {
+  };
+
+  componentDidMount() {
     this.inject();
-  },
-  componentDidUpdate: function () {
+  }
+
+  componentDidUpdate() {
     this.inject();
-  },
-  render: function () {
+  }
+
+  render() {
     return React.Children.only(this.props.children);
   }
-});
+}
 
 module.exports = Iconic;

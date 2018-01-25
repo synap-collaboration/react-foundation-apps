@@ -2,19 +2,17 @@ var React = require('react');
 var Animation = require('../utils/animation');
 var foundationApi = require('../utils/foundation-api');
 
-var Modal = React.createClass({
-  getInitialState: function () {
-    return { open: false };
-  },
-  getDefaultProps: function () {
-    return { 
-      overlay: true,
-      overlayClose: true,
-      animationIn: 'fadeIn',
-      animationOut: 'fadeOut'
-    };
-  },
-  componentDidMount: function () {
+class Modal extends React.Component {
+  static defaultProps = { 
+    overlay: true,
+    overlayClose: true,
+    animationIn: 'fadeIn',
+    animationOut: 'fadeOut'
+  };
+
+  state = { open: false };
+
+  componentDidMount() {
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
@@ -24,17 +22,20 @@ var Modal = React.createClass({
         this.setState({open: !this.state.open});
       }
     }.bind(this));
-  },
-  componentWillUnmount: function () {
+  }
+
+  componentWillUnmount() {
     foundationApi.unsubscribe(this.props.id);
-  },
-  hideOverlay: function (e) {
+  }
+
+  hideOverlay = (e) => {
     if (this.props.overlayClose && e.target == this._modalOverlay) {
       e.preventDefault();
       this.setState({open: false});
     }
-  },
-  render: function() {
+  };
+
+  render() {
     var overlayStyle = {};
     if (!this.props.overlay) {
       overlayStyle.background = 'transparent';
@@ -54,7 +55,7 @@ var Modal = React.createClass({
         </div>
       </Animation>
     );
-  },
-});
+  }
+}
 
 module.exports = Modal;

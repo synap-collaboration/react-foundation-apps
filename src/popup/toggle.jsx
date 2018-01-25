@@ -1,12 +1,13 @@
 var React = require('react');
 var foundationApi = require('../utils/foundation-api');
 
-var PopupToggle = React.createClass({
-  clickHandler: function (id, e) {
+class PopupToggle extends React.Component {
+  clickHandler = (id, e) => {
     e.preventDefault();
     foundationApi.publish(this.props.popupToggle, ['toggle', id]);
-  },
-  render: function () {
+  };
+
+  render() {
     var child = React.Children.only(this.props.children);
     var id = this.props.id || foundationApi.generateUuid();
     return React.cloneElement(child, {
@@ -14,6 +15,6 @@ var PopupToggle = React.createClass({
       onClick: this.clickHandler.bind(this, id)
     });
   }
-});
+}
 
 module.exports = PopupToggle;

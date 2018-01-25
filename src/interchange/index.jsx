@@ -1,4 +1,5 @@
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ResponsiveMixin = require('react-responsive-mixin');
 
 var namedQueries = {
@@ -16,11 +17,14 @@ var namedQueries = {
   //   'only screen and (min-resolution: 2dppx)'
 };
 
-var Interchange = React.createClass({
+var Interchange = createReactClass({
+  displayName: 'Interchange',
   mixins: [ResponsiveMixin],
+
   getInitialState: function () {
     return {matchedMedia: 'large'};
   },
+
   componentDidMount: function () {
     // for (var name in namedQueries) {
     //   this.media(namedQueries[name], function () {
@@ -37,6 +41,7 @@ var Interchange = React.createClass({
       this.setState({matchedMedia: 'large'});  
     }.bind(this));
   },
+
   render: function () {
     var matchedNode = null;
     React.Children.forEach(this.props.children, function (child) {
@@ -45,7 +50,7 @@ var Interchange = React.createClass({
       }
     }.bind(this));
     return matchedNode;
-  }
+  },
 });
 
 module.exports = Interchange;

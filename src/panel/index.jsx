@@ -2,16 +2,14 @@ var React = require('react');
 var Animation = require('../utils/animation');
 var foundationApi = require('../utils/foundation-api');
 
-var Panel = React.createClass({
-  getInitialState: function () {
-    return {open: false};
-  },
-  getDefaultProps: function () {
-    return {
-      position: 'left'
-    };
-  },
-  componentDidMount: function () {
+class Panel extends React.Component {
+  static defaultProps = {
+    position: 'left'
+  };
+
+  state = {open: false};
+
+  componentDidMount() {
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
@@ -21,16 +19,18 @@ var Panel = React.createClass({
         this.setState({open: !this.state.open});
       }
     }.bind(this));
-  },
-  componentWillUnmount: function () {
+  }
+
+  componentWillUnmount() {
     foundationApi.unsubscribe(this.props.id);
-  },
-  render: function() {
+  }
+
+  render() {
     var animationIn, animationOut;
     var classes = 'panel panel-' + this.props.position;
     if (this.props.className) {
       classes += ' ' + this.props.className;
-    } 
+    }
     if(this.props.position === 'left') {
       animationIn  = this.props.animationIn || 'slideInRight';
       animationOut = this.props.animationOut || 'slideOutLeft';
@@ -51,7 +51,7 @@ var Panel = React.createClass({
         </div>
       </Animation>
     );
-  },
-});
+  }
+}
 
 module.exports = Panel;

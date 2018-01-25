@@ -3,11 +3,10 @@ var foundationApi = require('../utils/foundation-api');
 var Notification = require('./notification');
 var Animation = require('../utils/animation');
 
-var NotificationSet = React.createClass({
-  getInitialState: function () {
-    return {notifications: []};
-  },
-  componentDidMount: function () {
+class NotificationSet extends React.Component {
+  state = {notifications: []};
+
+  componentDidMount() {
     foundationApi.subscribe(this.props.id, function(name, msg) {
       if(msg === 'clearall') {
         this.clearAll();
@@ -15,15 +14,17 @@ var NotificationSet = React.createClass({
         this.addNotification(msg);
       }
     }.bind(this));
-  },
-  addNotification: function (notification) {
+  }
+
+  addNotification = (notification) => {
     notification.id = foundationApi.generateUuid();
     var notifications = this.state.notifications.concat(notification);
     this.setState({
       notifications: notifications
     });
-  },
-  removeNotifcation: function (id) {
+  };
+
+  removeNotifcation = (id) => {
     return function (e) {
       var notifications = []
       this.state.notifications.forEach(function (notification) {
@@ -36,11 +37,13 @@ var NotificationSet = React.createClass({
       });
       e.preventDefault();
     }.bind(this);
-  },
-  clearAll: function () {
+  };
+
+  clearAll = () => {
     this.setState({notifications: []});
-  },
-  render: function () {
+  };
+
+  render() {
     var notifications = this.state.notifications.map(function (notification) {
       return (
         <Notification key={notification.id} {...notification} closeHandler={this.removeNotifcation(notification.id)} className='is-active'>
@@ -52,6 +55,6 @@ var NotificationSet = React.createClass({
         <div>{notifications}</div>
     )  
   }
-});
+}
 
 module.exports = NotificationSet;
